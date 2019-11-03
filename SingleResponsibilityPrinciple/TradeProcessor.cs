@@ -68,6 +68,16 @@ namespace SingleResponsibilityPrinciple
                 return false;
             }
 
+            if (tradeAmount < 1000)
+            {
+                LogMessage("WARN", " Trade amount on line {0] is too small: '{1}'", currentLine, fields[1]);
+            }
+
+            if (tradeAmount > 100000)
+            {
+                LogMessage("WARN", " Trade amount on line {0] is too large: '{1}'", currentLine, fields[1]);
+            }
+
             decimal tradePrice;
             if (!decimal.TryParse(fields[2], out tradePrice))
             {
@@ -80,7 +90,12 @@ namespace SingleResponsibilityPrinciple
 
         private void LogMessage(string msgType, string message, params object[] args)
         {
-            Console.WriteLine(msgType+ " :" +message, args);
+            Console.WriteLine(msgType+ " :" +message, args); // Log message to the console
+
+            using (StreamWriter logfile = File.AppendText("log.xml")) // Then also to the xml log file
+            {
+                logfile.WriteLine("<log><type>" + msgType + "</type><message>" + message + "</message></log> ", args);
+            }
         }
 
         private TradeRecord MapTradeDataToTradeRecord(string[] fields)
@@ -104,7 +119,7 @@ namespace SingleResponsibilityPrinciple
         private void StoreTrades(IEnumerable<TradeRecord> trades)
         {
             LogMessage("INFO", "  Connecting to Database");
-            using (var connection = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\tradedatabase.mdf;Integrated Security=True;Connect Timeout=30;"))
+            using (var connection = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Derek\Documents\tradesDatabase.mdf;Integrated Security=True;Connect Timeout=30"))
             {
                 connection.Open();
                 using (var transaction = connection.BeginTransaction())

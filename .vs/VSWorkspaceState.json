@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\SingleResponsibilityPrinciple",
-    "\\SingleResponsibilityPrincipleTests"
+    "\\SingleResponsibilityPrincipleTests",
+    "\\SingleResponsibilityPrincipleTests\\bin"
   ],
-  "SelectedNode": "\\SingleResponsibilityPrinciple\\TradeProcessor.cs",
+  "SelectedNode": "\\SingleResponsibilityPrincipleTests\\bin",
   "PreviewInSolutionExplorer": false
 }

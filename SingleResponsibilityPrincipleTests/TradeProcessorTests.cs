@@ -13,10 +13,12 @@ namespace SingleResponsibilityPrinciple.Tests
     [TestClass()]
     public class TradeProcessorTests
     {
+        const string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\USERS\DEREK\DOCUMENTS\TRADESDATABASE.MDF;Integrated Security=True;Connect Timeout=30;";
+
 
         private int CountDbRecords()
         {
-            using (var connection = new System.Data.SqlClient.SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\tradedatabase.mdf;Integrated Security=True;Connect Timeout=30;"))
+            using (var connection = new System.Data.SqlClient.SqlConnection(connectionString))
             {
                 connection.Open();
                 string myScalarQuery = "select count(*) from trade";
