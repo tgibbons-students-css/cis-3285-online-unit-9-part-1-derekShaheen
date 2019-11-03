@@ -153,6 +153,27 @@ namespace SingleResponsibilityPrinciple
             StoreTrades(trades);
         }
 
+        public void ProcessTrades(string stream)
+        {
+            var lines = ReadURLTradeData(stream);
+            var trades = ParseTrades(lines);
+            StoreTrades(trades);
+        }
 
+        public IEnumerable<string> ReadURLTradeData(string url)
+        {
+            var tradeData = new List<string>();
+            var client = new WebClient();
+            using (var stream = client.OpenRead(url))
+            using (var reader = new StreamReader(stream))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    tradeData.Add(line);
+                }
+            }
+            return tradeData;
+        }
     }
 }
